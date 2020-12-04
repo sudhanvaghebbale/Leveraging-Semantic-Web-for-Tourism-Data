@@ -46,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng marker = new LatLng(place.getLatitude(), place.getLongitude());
             mMap.addMarker(new MarkerOptions().position(marker).title(place.getType()+":"+place.getName()).snippet(place.getID()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
+            mMap.setMinZoomPreference(10.0f);
         }
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override

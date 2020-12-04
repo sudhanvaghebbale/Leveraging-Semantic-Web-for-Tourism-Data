@@ -246,7 +246,7 @@ public class Queries {
                 "\n" +
                 "\tUNION\n" +
                 "\t{\n" +
-                "\t\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/dataset2>{\n" +
+                "\t\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset>{\n" +
                 "    \t\t?subject rdf:type pub:Pub .\n" +
                 "      \t\t?subject pub:hasName ?name.\n" +
                 "      ?subject geo:lat ?lat.\n" +
@@ -263,7 +263,7 @@ public class Queries {
                 "      ?subject geo:long ?long.\n" +
                 "  \t\t}\n" +
                 "  \t}\n" +
-                "  \tFILTER(contains(?name, \"" + KEYWORD + "\")).\n" +
+                "  \tFILTER(contains(?name, " + "\"" + KEYWORD + "\"" + ")).\n" +
 
                 "}\n";
         return query;

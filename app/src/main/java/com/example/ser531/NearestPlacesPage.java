@@ -37,7 +37,6 @@ public class NearestPlacesPage extends AppCompatActivity {
         getSupportActionBar().setTitle("SER531");
         String latitude = getIntent().getStringExtra("latitude");
         String longitude = getIntent().getStringExtra("longitude");
-        System.out.println(latitude + "Ankit");
         queries = new Queries(latitude, longitude);
         queries.KEYWORD = "";
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -89,7 +88,7 @@ public class NearestPlacesPage extends AppCompatActivity {
         mainLinearLayout.addView(textView);
         for(Place place : places) {
             TextView tv = new TextView(this);
-            tv.setText(place.getName() + "                                                        " + place.getType());
+            tv.setText(place.getName() + " (" + place.getType()+")");
             tv.setTextSize(22);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1.0f);
             lp.setMargins(0,15,0,10);
@@ -110,7 +109,7 @@ public class NearestPlacesPage extends AppCompatActivity {
         String serviceEndPoint = "http://ec2-34-207-128-85.compute-1.amazonaws.com:3030/dataset3";
 
         String query = queryBuilder(covidSafety, popularity, placeType, keyword);
-        //System.out.println(query);
+        System.out.println(query);
 
 
 //        Query query1 = QueryFactory.create(query, Syntax.syntaxARQ);
