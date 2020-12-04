@@ -2,4 +2,11 @@
     <string name="app_name">SER540</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="tab">\u0009\u0009\u0009\u0009\u00009\u00009\u00009\u00009\u00009\u00009\u00009</string>
+    <string-array name="places_array">
+        <item>All Places</item>
+        <item>Pubs</item>
+        <item>Points Of Interest</item>
+        <item>Tube Stations</item>
+    </string-array>
 </resources>

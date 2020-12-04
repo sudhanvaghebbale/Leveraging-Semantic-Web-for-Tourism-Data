@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NearestPlacesPage">
+
+    <SearchView
+            android:layout_width="444dp"
+            android:layout_height="49dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="673dp"
+            android:id="@+id/keywordSearchView" app:layout_constraintStart_toStartOf="parent"/>
+    <ScrollView
+            android:layout_width="409dp"
+            android:layout_height="490dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/nearestPlacesScrollView" android:layout_marginBottom="21dp"
+            app:layout_constraintBottom_toTopOf="@+id/goToMapButton">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:id="@+id/linearLayoutInsideScrollView">
+            <TextView
+                    android:text="Nearest Places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView5"/>
+        </LinearLayout>
+    </ScrollView>
+    <Button
+            android:text="Go To Map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goToMapButton"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="276dp"
+            android:layout_marginStart="276dp"/>
+    <CheckBox
+            android:text="Covid Safe Places"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/covidCheckBox" app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/popularityCheckBox"/>
+    <CheckBox
+            android:text="Popular Places"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/popularityCheckBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="588dp"/>
+    <Spinner
+            android:layout_width="200dp"
+            android:layout_height="61dp"
+            android:id="@+id/spinner" android:spinnerMode="dropdown"
+            android:layout_marginBottom="27dp"
+            app:layout_constraintBottom_toTopOf="@+id/nearestPlacesScrollView"
+            app:layout_constraintStart_toEndOf="@+id/covidCheckBox" android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp" android:visibility="visible" tools:visibility="visible"/>
+    <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nearestPlacesSubmit"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

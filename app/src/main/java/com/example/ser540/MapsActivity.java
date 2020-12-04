@@ -1,5 +1,7 @@
 package com.example.ser540;
 
+import android.content.Intent;
+import android.view.View;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,7 +10,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,10 +42,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        ArrayList<Place> places = (ArrayList<Place>) getIntent().getSerializableExtra("places");
+        for(Place place : places) {
+            LatLng marker = new LatLng(place.getLatitude(), place.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(marker).title(place.getType()+":"+place.getName()).snippet(place.getID()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
+        }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String ID = marker.getSnippet();
+                Intent i = new Intent(MapsActivity.this, POIDetailsPage.class);
+                i.putExtra("id", ID);
+                startActivity(i);
+                return false;
+            }
+        });
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
