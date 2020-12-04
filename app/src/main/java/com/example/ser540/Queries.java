@@ -5,10 +5,15 @@ public class Queries {
     public String CURRENT_LAT;
     public String CURRENT_LONG;
     public String KEYWORD;
+    public String URL;
 
     public Queries(String latitude, String longitude) {
         this.CURRENT_LAT = latitude;
         this.CURRENT_LONG = longitude;
+    }
+
+    public Queries(String URL) {
+        this.URL = URL;
     }
     public String nearestPOI() {
         String query = "PREFIX poi: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-2#>\n" +
@@ -17,10 +22,11 @@ public class Queries {
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
                 "PREFIX geof: <http://www.opengis.net/def/function/geosparql/>\n" +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "?subject geo:lat ?lat .\n" +
                 "?subject geo:long ?long .\n" +
+                "?subject poi:hasName ?name.\n" +
                 "  BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "  BIND(?first * ?first AS ?firstSQ) .\n" +
                 "  BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -42,12 +48,13 @@ public class Queries {
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "PREFIX po: <http://purl.org/ontology/po/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "  \tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
                 "  \t?subject rdf:type pub:Pub .\n" +
                 "    ?subject geo:lat ?lat .\n" +
                 "    ?subject geo:long ?long .\n" +
+                "?subject pub:hasName ?name.\n" +
                 "  BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "  BIND(?first * ?first AS ?firstSQ) .\n" +
                 "  BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -70,12 +77,13 @@ public class Queries {
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "PREFIX po: <http://purl.org/ontology/po/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "  \tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
                 "  \t?subject rdf:type station:TubeStation .\n" +
                 "    ?subject geo:lat ?lat .\n" +
                 "    ?subject geo:long ?long .\n" +
+                "?subject station:hasName ?name.\n" +
                 "  BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "  \tBIND(?first * ?first AS ?firstSQ) .\n" +
                 "  BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -119,11 +127,12 @@ public class Queries {
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "PREFIX po: <http://purl.org/ontology/po/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "\t{\n" +
                 "      ?subject geo:lat ?lat .\n" +
                 "      ?subject geo:long ?long .\n" +
+                "?subject poi:hasName ?name.\n" +
                 "      BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "      BIND(?first * ?first AS ?firstSQ) .\n" +
                 "      BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -137,6 +146,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject pub:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -151,6 +161,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject station:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -224,11 +235,13 @@ public class Queries {
                 "PREFIX station: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-8#>\n" +
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "\n" +
-                "SELECT ?subject ?name\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "\t{\n" +
                 "      ?subject rdf:type poi:POI.\n" +
                 "      ?subject poi:hasName ?name.\n" +
+                "      ?subject geo:lat ?lat.\n" +
+                "      ?subject geo:long ?long.\n" +
                 "\t}\n" +
                 "\n" +
                 "\tUNION\n" +
@@ -236,6 +249,8 @@ public class Queries {
                 "\t\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/dataset2>{\n" +
                 "    \t\t?subject rdf:type pub:Pub .\n" +
                 "      \t\t?subject pub:hasName ?name.\n" +
+                "      ?subject geo:lat ?lat.\n" +
+                "      ?subject geo:long ?long.\n" +
                 "      \t\t\n" +
                 "  \t\t}\n" +
                 "\t}\n" +
@@ -244,6 +259,8 @@ public class Queries {
                 "    \tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset>{\n" +
                 "    \t\t?subject rdf:type station:TubeStation .\n" +
                 "      \t\t?subject station:hasName ?name.\n" +
+                "      ?subject geo:lat ?lat.\n" +
+                "      ?subject geo:long ?long.\n" +
                 "  \t\t}\n" +
                 "  \t}\n" +
                 "  \tFILTER(contains(?name, \"" + KEYWORD + "\")).\n" +
@@ -263,11 +280,12 @@ public class Queries {
                 "PREFIX station: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-8#>\n" +
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "\t{\n" +
                 "      ?subject geo:lat ?lat .\n" +
                 "      ?subject geo:long ?long .\n" +
+                "?subject poi:hasName ?name.\n" +
                 "      BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "      BIND(?first * ?first AS ?firstSQ) .\n" +
                 "      BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -279,6 +297,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject pub:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -291,6 +310,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject station:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -334,11 +354,12 @@ public class Queries {
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "PREFIX po: <http://purl.org/ontology/po/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name\n" +
                 "WHERE {\n" +
                 "\t{\n" +
                 "      ?subject geo:lat ?lat .\n" +
                 "      ?subject geo:long ?long .\n" +
+                "?subject poi:hasName ?name.\n" +
                 "      BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "      BIND(?first * ?first AS ?firstSQ) .\n" +
                 "      BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -352,6 +373,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject pub:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -366,6 +388,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject station:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -392,11 +415,12 @@ public class Queries {
                 "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
                 "PREFIX po: <http://purl.org/ontology/po/>\n" +
                 "\n" +
-                "SELECT ?distance ?subject\n" +
+                "SELECT ?subject ?lat ?long ?name ?type\n" +
                 "WHERE {\n" +
                 "\t{\n" +
                 "      ?subject geo:lat ?lat .\n" +
                 "      ?subject geo:long ?long .\n" +
+                "?subject poi:hasName ?name.\n" +
                 "      BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "      BIND(?first * ?first AS ?firstSQ) .\n" +
                 "      BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -411,6 +435,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject pub:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -426,6 +451,7 @@ public class Queries {
                 "\tSERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
                 "    \t?subject geo:lat ?lat .\n" +
                 "        ?subject geo:long ?long .\n" +
+                "?subject station:hasName ?name.\n" +
                 "        BIND(xsd:double(?lat) - xsd:double(" + CURRENT_LAT + ") AS ?first) .\n" +
                 "        BIND(?first * ?first AS ?firstSQ) .\n" +
                 "        BIND(xsd:double(?long) - xsd:double(" + CURRENT_LONG + ") AS ?second) .\n" +
@@ -440,6 +466,79 @@ public class Queries {
                 "}\n" +
                 "ORDER BY ?distance ?covidRating ?popularRating\n" +
                 "LIMIT 50\n";
+        return query;
+    }
+
+    public String getPOIDetailsQuery() {
+        String detailsPOI = "PREFIX poi: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-2#>\n" +
+                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX pub: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-14#>\n" +
+                "PREFIX station: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-8#>\n" +
+                "\n" +
+                "SELECT ?name ?address ?website ?reviewCount ?polarityCount ?popularityRating ?covidRating\n" +
+                "WHERE {\n" +
+                "  <"+ URL +"> poi:hasName ?name .\n" +
+                "  <"+ URL +"> poi:hasAddress ?address .\n" +
+                "  OPTIONAL { <"+ URL +"> poi:hasWebsite ?website }.\n" +
+                "  <"+ URL +"> poi:hasReviewCount ?reviewCount .\n" +
+                "  <"+ URL +"> poi:hasPolarity ?polarityCount .\n" +
+                "  <"+ URL +"> poi:hasPopularityRating ?popularityRating .\n" +
+                "  <"+ URL +"> poi:hasCovidSafetyRating ?covidRating .\n" +
+                "}\n" +
+                "LIMIT 50\n";
+        return detailsPOI;
+
+    }
+
+    public String getPubsDetailsQuery() {
+        String query = "PREFIX poi: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-2#>\n" +
+                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX pub: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-14#>\n" +
+                "PREFIX station: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-8#>\n" +
+                "PREFIX po: <http://purl.org/ontology/po/>\n" +
+                "\n" +
+                "SELECT DISTINCT ?name ?address ?popularityRating ?covidRating ?popularItemName\n" +
+                "WHERE {\n" +
+                "  SERVICE <http://ec2-52-86-45-247.compute-1.amazonaws.com:3030/PubsDataset> {\n" +
+                "\n" +
+                "  <"+ URL +"> pub:hasName ?name .\n" +
+                "  <"+ URL +"> pub:hasAddress ?address .\n" +
+                "  <"+ URL +"> pub:hasPopularityRating ?popularityRating .\n" +
+                "  <"+ URL +"> pub:hasCovidSafetyRating ?covidRating .\n" +
+                "  <"+ URL +"> pub:hasPopularItem ?popularItem.\n" +
+                "  ?popularItem pub:hasPopularItemName ?popularItemName.\n" +
+                "  }\n" +
+                "}\n";
+        return query;
+
+    }
+
+    public String getStationsDetailsQuery() {
+        String query = "PREFIX poi: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-2#>\n" +
+                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX pub: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-14#>\n" +
+                "PREFIX station: <http://www.semanticweb.org/sudhanvahebbale/ontologies/2020/10/untitled-ontology-8#>\n" +
+                "PREFIX po: <http://purl.org/ontology/po/>\n" +
+                "PREFIX st: <http://ns.inria.fr/sparql-template/>\n" +
+                "\n" +
+                "SELECT DISTINCT ?name ?covidRating ?popularityRating ?platformCount ?zoneColor\n" +
+                "WHERE {\n" +
+                "  SERVICE <http://ec2-54-224-109-188.compute-1.amazonaws.com:3030/StationsDataset> {\n" +
+                "\n" +
+                "  <"+ URL +"> station:hasName ?name .\n" +
+                "  <"+ URL +"> station:hasPopularityRating ?popularityRating .\n" +
+                "  <"+ URL +"> station:hasCovidSafetyRating ?covidRating .\n" +
+                "    <"+ URL +"> station:hasPlatformCount ?platformCount.\n" +
+                "    <"+ URL +"> station:isInZone ?zone.\n" +
+                "    ?zone station:hasZoneColor ?zoneColor.\n" +
+                "  }\n" +
+                "}\n";
         return query;
     }
 }

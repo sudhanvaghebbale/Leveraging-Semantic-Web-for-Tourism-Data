@@ -126,16 +126,30 @@ public class NearestPlacesPage extends AppCompatActivity {
 //        ResultSet resultSet = qe.execSelect();
         QueryExecution q = new QueryEngineHTTP(serviceEndPoint, query);
         ResultSet results = q.execSelect();
+        //ResultSetFormatter.out(System.out, results);
+        while(results.hasNext()) {
+            QuerySolution qs = results.next();
+            String latitude = qs.get("?lat").toString();
+            String longitude = qs.get("?long").toString();
+            String name = qs.get("?name").toString();
+            String URI = qs.get("?subject").toString();
+            String type;
+            if(URI.contains("ontology-14"))
+                type = "Pub";
+            else if(URI.contains("ontology-2"))
+                type = "POI";
+            else
+                type = "Tube Station";
+            Place place = new Place(Double.parseDouble(latitude), Double.parseDouble(longitude), URI, name, type);
+            places.add(place);
 
-        ResultSetFormatter.out(System.out, results);
-        places.add(new Place(51.2333, 0.4819, "1", "Name", "POI"));
-        places.add(new Place(51.1333, 0.4119, "2", "Name", "POI"));
-        places.add(new Place(51.0333, 0.3819, "3", "Name", "POI"));
+        }
+        //ResultSetFormatter.out(System.out, results);
         return places;
     }
     private String queryBuilder(boolean covidSafety, boolean popularity, String placeType, String keyword) {
         String query = "";
-        if(keyword == "") {
+        if(keyword.equals("")) {
             if(placeType.equals("POI"))
                 query = queries.nearestPOI();
 
@@ -158,7 +172,6 @@ public class NearestPlacesPage extends AppCompatActivity {
 
             else {
                 query = queries.nearestFederated();
-                System.out.println("This is thr query");
             }
                 //get all federated.
 
@@ -168,8 +181,6 @@ public class NearestPlacesPage extends AppCompatActivity {
             query = queries.KeyWordSearchfederated();//get keyword federated.
         }
 
-        System.out.println(query);
-        System.out.println(queries.CURRENT_LONG);
         return query;
     }
 }
