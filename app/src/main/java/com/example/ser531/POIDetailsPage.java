@@ -1,6 +1,5 @@
-package com.example.ser540;
+package com.example.ser531;
 
-import android.content.Intent;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ public class POIDetailsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poi_details);
+        getSupportActionBar().setTitle("SER531");
         String URL = getIntent().getStringExtra("id");
 
         TextView textView = findViewById(R.id.detailPageTextView);

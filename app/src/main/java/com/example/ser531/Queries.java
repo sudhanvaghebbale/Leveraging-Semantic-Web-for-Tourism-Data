@@ -1,4 +1,4 @@
-package com.example.ser540;
+package com.example.ser531;
 
 public class Queries {
 

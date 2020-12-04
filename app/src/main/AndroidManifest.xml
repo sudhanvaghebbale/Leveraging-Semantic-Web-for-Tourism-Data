@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.ser540">
+          package="com.example.ser531">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -16,15 +16,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".NearestPlacesPage">
+        <activity android:name="com.example.ser531.NearestPlacesPage">
         </activity>
-        <activity android:name=".StationsDetailsPage">
+        <activity android:name="com.example.ser531.POIDetailsPage">
         </activity>
-        <activity android:name=".PubsDetailsPage">
-        </activity>
-        <activity android:name=".POIDetailsPage">
-        </activity>
-        <activity android:name=".LandingPage">
+        <activity android:name="com.example.ser531.LandingPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -44,7 +40,7 @@
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name=".MapsActivity"
+                android:name="com.example.ser531.MapsActivity"
                 android:label="@string/title_activity_maps">
         </activity>
     </application>

@@ -1,8 +1,7 @@
-package com.example.ser540;
+package com.example.ser531;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 //import org.apache.jena.query.ResultSet;
 //import org.apache.jena.query.ResultSetFormatter;
 //import org.apache.jena.sparql.lang.SPARQLParser;
-import com.hp.hpl.jena.query.*;
+
 
 public class LandingPage extends AppCompatActivity {
     EditText latitudeEditText;
@@ -22,7 +21,7 @@ public class LandingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
-
+        getSupportActionBar().setTitle("SER531");
         latitudeEditText = this.findViewById(R.id.gpsXEditText);
         longitudeEditText = this.findViewById(R.id.gpsYEditText);
 

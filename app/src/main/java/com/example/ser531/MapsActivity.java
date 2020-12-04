@@ -1,7 +1,6 @@
-package com.example.ser540;
+package com.example.ser531;
 
 import android.content.Intent;
-import android.view.View;
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 

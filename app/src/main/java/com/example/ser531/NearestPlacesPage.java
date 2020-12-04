@@ -1,9 +1,6 @@
-package com.example.ser540;
+package com.example.ser531;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.StrictMode;
 import android.view.View;
@@ -11,13 +8,9 @@ import android.widget.*;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.sparql.core.DatasetImpl;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class NearestPlacesPage extends AppCompatActivity {
@@ -41,6 +34,7 @@ public class NearestPlacesPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearest_places_page);
+        getSupportActionBar().setTitle("SER531");
         String latitude = getIntent().getStringExtra("latitude");
         String longitude = getIntent().getStringExtra("longitude");
         System.out.println(latitude + "Ankit");
@@ -60,8 +54,7 @@ public class NearestPlacesPage extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinner.setAdapter(adapter);
-
-        this.places = executeQuery(covidSafety, popularity, placeType, queries.KEYWORD);
+        executeQuery(covidSafety, popularity, placeType, queries.KEYWORD);
         createViews();
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +66,7 @@ public class NearestPlacesPage extends AppCompatActivity {
                 String keyword = searchView.getQuery().toString();
 
                 queries.KEYWORD = keyword;
-                places = executeQuery(covidSafety, popularity, placeType, queries.KEYWORD);
+                executeQuery(covidSafety, popularity, placeType, queries.KEYWORD);
 
                 createViews();
             }
@@ -109,8 +102,8 @@ public class NearestPlacesPage extends AppCompatActivity {
         }
     }
 
-    private ArrayList<Place> executeQuery(boolean covidSafety, boolean popularity, String placeType, String keyword) {
-        ArrayList<Place> places = new ArrayList<>();
+    private void executeQuery(boolean covidSafety, boolean popularity, String placeType, String keyword) {
+        this.places = new ArrayList<>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -145,7 +138,6 @@ public class NearestPlacesPage extends AppCompatActivity {
 
         }
         //ResultSetFormatter.out(System.out, results);
-        return places;
     }
     private String queryBuilder(boolean covidSafety, boolean popularity, String placeType, String keyword) {
         String query = "";
