@@ -24,3 +24,4 @@
 * Downlaod IntelliJ IDE
 * Follow the instructions: https://www.jetbrains.com/help/idea/create-your-first-android-application.html
 * Place the entire Android App folder in the IntelliJ Project
+* PS: Make use of JDK 12 to run the android app.
