@@ -2,7 +2,11 @@
 
 ## Dataset Generation
 
-  * To get started with pandas, you need to install the pandas package using the pip installer. 
+  * To get started, you need to install the pandas package using the pip installer. 
     ```
     pip install pandas
+    ```
+  * Then run the file using Python command
+    ```
+    python dataset.py
     ```
