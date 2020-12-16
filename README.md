@@ -1,4 +1,4 @@
-# SER531_Project
+# Leveraging Semantic Web for Tourism Data
 
 ## Dataset Generation
 
